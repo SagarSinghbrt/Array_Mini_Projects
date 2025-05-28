@@ -15,7 +15,7 @@
 # Method for Creating This
 
 -   Make or Fetch data in the form of Array which can includes Objects/JSON.
--   Creat a keyup/click event which filter the data for Search.
+-   Create a keyup/click event which filter the data for Search.
 -   Make both Input Value and existing data to lower case.
 -   Manipulate all data/filter data to make <li>${data}</li> use .forEach().
 -   Call a Display function which display all the data.
