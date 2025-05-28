@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Live Search Filter</title>
+		<style>
+			body {
+				font-family: sans-serif;
+				padding: 20px;
+				max-width: 500px;
+				margin: auto;
+			}
+			input {
+				width: 100%;
+				padding: 10px;
+				margin-bottom: 15px;
+				font-size: 16px;
+			}
+			ul {
+				list-style-type: none;
+				padding-left: 0;
+			}
+			li {
+				padding: 8px 12px;
+				margin: 5px 0;
+				background-color: #f3f3f3;
+				border-radius: 4px;
+			}
+			.highlight {
+				font-weight: bold;
+				background-color: yellow;
+			}
+		</style>
+	</head>
+	<body>
+		<h2>Live Search Filter</h2>
+		<input type="text" id="searchInput" placeholder="Search fruits..." />
+		<ul id="fruitList"></ul>
+
+		<script>
+			const fruits = [
+				"Apple",
+				"Banana",
+				"Cherry",
+				"Dragonfruit",
+				"Grapes",
+				"Mango",
+				"Orange",
+				"Pineapple",
+				"Strawberry",
+				"Watermelon",
+			];
+
+			const searchInput = document.getElementById("searchInput");
+			const fruitList = document.getElementById("fruitList");
+
+			function displayFruits(filteredFruits, query = "") {
+				fruitList.innerHTML = "";
+
+				filteredFruits.forEach((fruit) => {
+					const li = document.createElement("li");
+					console.log(query);
+
+					if (query) {
+						const regex = new RegExp(`(${query})`, "gi");
+						li.innerHTML = fruit.replace(
+							regex,
+							`<span class="highlight">$1</span>`
+						);
+					} else {
+						li.textContent = fruit;
+					}
+
+					fruitList.appendChild(li);
+				});
+
+				if (filteredFruits.length === 0) {
+					fruitList.innerHTML = "<li>No results found</li>";
+				}
+			}
+
+			// Initial render
+			displayFruits(fruits);
+
+			searchInput.addEventListener("input", () => {
+				const searchTerm = searchInput.value.toLowerCase();
+
+				const filtered = fruits.filter((fruit) =>
+					fruit.toLowerCase().includes(searchTerm)
+				);
+
+				displayFruits(filtered, searchTerm);
+			});
+		</script>
+	</body>
+</html>
