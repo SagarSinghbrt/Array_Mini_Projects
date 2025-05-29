@@ -54,12 +54,12 @@
 			const searchInput = document.getElementById("searchInput");
 			const fruitList = document.getElementById("fruitList");
 
-			function displayFruits(filteredFruits, query = "") {
+			function displayData(fruitsData, query = "") {
 				fruitList.innerHTML = "";
+				console.log(query);
 
-				filteredFruits.forEach((fruit) => {
+				fruitsData.forEach((fruit) => {
 					const li = document.createElement("li");
-					console.log(query);
 
 					if (query) {
 						const regex = new RegExp(`(${query})`, "gi");
@@ -68,28 +68,25 @@
 							`<span class="highlight">$1</span>`
 						);
 					} else {
-						li.textContent = fruit;
+						li.innerHTML = fruit;
 					}
-
 					fruitList.appendChild(li);
 				});
 
-				if (filteredFruits.length === 0) {
+				if (fruitsData.length === 0) {
 					fruitList.innerHTML = "<li>No results found</li>";
 				}
 			}
 
-			// Initial render
-			displayFruits(fruits);
+			displayData(fruits);
 
-			searchInput.addEventListener("input", () => {
-				const searchTerm = searchInput.value.toLowerCase();
+			searchInput.addEventListener("keyup", () => {
+				let value = searchInput.value.toLowerCase();
 
-				const filtered = fruits.filter((fruit) =>
-					fruit.toLowerCase().includes(searchTerm)
-				);
-
-				displayFruits(filtered, searchTerm);
+				let filterfruits = fruits.filter((frut) => {
+					return frut.toLowerCase().includes(value);
+				});
+				displayData(filterfruits, value);
 			});
 		</script>
 	</body>
