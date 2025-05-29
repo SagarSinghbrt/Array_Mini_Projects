@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Text Cleaner apps</title>
+		<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+		<style>
+			.btn-common {
+				color: #fff;
+				border: 1px solid #fff;
+				padding: 8px 18px;
+				font-size: 28px;
+				border-radius: 8px;
+				width: fit-content;
+			}
+		</style>
+	</head>
+	<body class="w-screen h-screen bg-[#000]">
+		<main
+			class="my-[88px] mx-[auto] max-w-screen-md flex flex-col items-center justify-center"
+		>
+			<h3 class="text-[28px] text-[#fff]">Text Cleaner apps</h3>
+			<textarea
+				name="textarea"
+				id="textarea"
+				class="border-2 border-[#fff] w-full h-[180px] p-[28px] text-[#fff] font-bold leading-8"
+			></textarea>
+
+			<div
+				class="btn-container flex items-center gap-[28px] flex-wrap gap-4 my-[8px] text-center"
+			>
+				<button class="btn-common" onclick="removeExtraSpaces()">
+					Remove Extra Spaces
+				</button>
+				<button class="btn-common" onclick="removeLineBreaks()">
+					Remove Line Breaks
+				</button>
+				<button class="btn-common" onclick="toCapitalizeText()">
+					To Capitalize
+				</button>
+				<button class="btn-common" onclick="trimSpaces()">
+					Trim Start/End
+				</button>
+				<button class="btn-common" onclick="clearText()">Clear</button>
+			</div>
+		</main>
+		<script>
+			let textareaValue = document.getElementById("textarea");
+
+			function removeExtraSpaces() {
+				textareaValue.value = textareaValue.value.replace(/\s+/g, " ");
+			}
+
+			function removeLineBreaks() {
+				textareaValue.value = textareaValue.value.replace(
+					/[\r+\n]/g,
+					" "
+				);
+			}
+
+			function toCapitalizeText() {
+				textareaValue.value = textareaValue.value.replace(
+					/\b[a-z]/gi,
+					(char) => char.toUpperCase()
+				);
+			}
+
+			function trimSpaces() {
+				textareaValue.value = textareaValue.value.trim();
+			}
+
+			function clearText() {
+				textareaValue.value = "";
+			}
+		</script>
+	</body>
+</html>
