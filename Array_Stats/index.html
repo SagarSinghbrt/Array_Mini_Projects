@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+	</head>
+	<body class="w-screen h-screen bg-[#000]">
+		<div class="container my-[88px] mx-auto max-w-screen-md text-[#fff]">
+			<h3 class="text-[28px] text-[#fff] font-bold">Array Stats</h3>
+			<textarea
+				name="textarea"
+				id="textarea"
+				class="w-full h-[80px] border-1 border-[#fff] text-[#fff] p-[18px] font-bold"
+			></textarea>
+			<button
+				onclick="ArrayStats()"
+				class="text-[28px] py-[8px] px-[18px] border-1 border-[#fff] m-[8px] rounded-[8px]"
+			>
+				gets stats
+			</button>
+			<div id="stats"></div>
+		</div>
+		<script>
+			const textarea = document.getElementById("textarea");
+			let textareaValue;
+
+			function ArrayStats() {
+				textareaValue = textarea.value
+					.trim()
+					.split(/[\s,]+/g)
+					.map((n) => parseFloat(n))
+					.filter(Boolean);
+				console.log(textareaValue);
+
+				let Total = textareaValue.length;
+				let sum = textareaValue.reduce((a, b) => a + b, 0);
+				let avg = sum / Total;
+				let max = Math.max(...textareaValue);
+				let min = Math.min(...textareaValue);
+
+				document.getElementById("stats").innerHTML = `
+        📊 Total Numbers: ${Total}<br>
+        ➕ Sum: ${sum}<br>
+        🧮 Average: ${avg.toFixed(2)}<br>
+        📈 Max: ${max}<br>
+        📉 Min: ${min}
+	`;
+			}
+		</script>
+	</body>
+</html>
