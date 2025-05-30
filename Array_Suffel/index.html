@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Array Suffel</title>
+		<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+	</head>
+	<body class="bg-[#000] h-screen text-center">
+		<h1 class="text-[28px] text-[#fff]">Array Suffel</h1>
+		<textarea
+			name="textarea"
+			id="textarea"
+			placeholder="Enter any text and seperate by ','"
+			class="block w-[80%] mx-auto h-[180px] border-2 border-[#fff] rounded-[8px] p-[28px] text-[18px] font-bold text-[#fff] my-[18px]"
+		></textarea>
+		<button
+			id="btn"
+			class="text-[28px] py-[8px] px-[18px] rounded-[28px] bg-gradient-to-r from-blue-600 via-sky-400 via-indigo-900 to-blue-300 text-white font-semibold shadow-lg z-10 my-[18px]"
+		>
+			Click Me
+		</button>
+
+		<p
+			id="result"
+			class="w-[80vw] mx-auto leading-[28px] font-bold border-2 border-[#fff] rounded-[8px] px-[18px] text-[18px] h-[28px] text-[#fff]"
+		></p>
+
+		<script>
+			const textarea = document.getElementById("textarea");
+			const result = document.getElementById("result");
+			const btn = document.getElementById("btn");
+
+			btn.addEventListener("click", function () {
+				let arr = textarea.value
+					.split(",")
+					.map((item) => item.trim())
+					.filter(Boolean);
+
+				for (let i = arr.length - 1; i > 0; i--) {
+					let j = Math.floor(Math.random() * (i + 1));
+					console.log(j);
+					[arr[i], arr[j]] = [arr[j], arr[i]];
+				}
+
+				result.innerHTML = arr.join(" ");
+			});
+		</script>
+	</body>
+</html>
