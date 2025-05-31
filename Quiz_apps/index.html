@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Quiz App</title>
+		<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+		<style>
+			button {
+				padding: 8px 18px;
+				background: rgb(15, 161, 219);
+				border-radius: 18px;
+				border: none;
+				font-size: 18px;
+				transition: background 0.3s ease;
+			}
+
+			button:hover {
+				background: deepskyblue;
+			}
+		</style>
+	</head>
+	<body class="h-screen bg-[#F0F4F8] flex justify-center items-center">
+		<main
+			class="p-7 bg-white text-center rounded shadow-md w-full max-w-md"
+		>
+			<h1 class="text-2xl font-semibold mb-4">Quiz App</h1>
+			<h3 id="qns" class="text-lg mb-5">Quiz question appears here</h3>
+
+			<div
+				id="options"
+				class="flex flex-wrap gap-2 justify-center mb-5"
+			></div>
+
+			<div id="result" class="text-lg font-medium text-green-600"></div>
+		</main>
+
+		<script>
+			const qns = document.getElementById("qns");
+			const optionsList = document.getElementById("options");
+			const result = document.getElementById("result");
+
+			const quiz = [
+				{
+					question: "What is the capital of Nepal?",
+					options: ["Pokhara", "Kathmandu", "Biratnagar", "Lalitpur"],
+					answer: "Kathmandu",
+				},
+				{
+					question: "HTML stands for?",
+					options: [
+						"HighText Machine Language",
+						"HyperText Markup Language",
+						"HyperLoop Transfer",
+						"None",
+					],
+					answer: "HyperText Markup Language",
+				},
+				{
+					question: "Which language is used for styling web pages?",
+					options: ["HTML", "jQuery", "CSS", "XML"],
+					answer: "CSS",
+				},
+				{
+					question:
+						"Which symbol is used for comments in JavaScript?",
+					options: ["<!-- -->", "//", "#", "/* */"],
+					answer: "//",
+				},
+				{
+					question:
+						"Which of the following is a JavaScript framework?",
+					options: ["Laravel", "React", "Django", "Flask"],
+					answer: "React",
+				},
+				{
+					question: "Which company developed JavaScript?",
+					options: ["Google", "Mozilla", "Netscape", "Microsoft"],
+					answer: "Netscape",
+				},
+				{
+					question: "What does CSS stand for?",
+					options: [
+						"Computer Style Sheets",
+						"Creative Style System",
+						"Cascading Style Sheets",
+						"Colorful Style Syntax",
+					],
+					answer: "Cascading Style Sheets",
+				},
+				{
+					question:
+						"Which tag is used to include JavaScript in HTML?",
+					options: ["<js>", "<javascript>", "<script>", "<code>"],
+					answer: "<script>",
+				},
+			];
+
+			let score = 0;
+			let index = 0;
+
+			function loadQns() {
+				const currentQns = quiz[index];
+				qns.textContent = currentQns.question;
+				optionsList.innerHTML = "";
+
+				currentQns.options.forEach((option) => {
+					const button = document.createElement("button");
+					button.textContent = option;
+					optionsList.appendChild(button);
+				});
+
+				checkAns();
+			}
+
+			function checkAns() {
+				document.querySelectorAll("#options button").forEach((item) => {
+					item.addEventListener("click", function () {
+						if (item.textContent === quiz[index].answer) {
+							score++;
+						}
+
+						index++;
+
+						if (index < quiz.length) {
+							loadQns();
+						} else {
+							qns.textContent = "Quiz Completed!";
+							optionsList.innerHTML = "";
+							result.textContent = `Your Score is ${score} / ${quiz.length}`;
+						}
+					});
+				});
+			}
+
+			// Start the quiz
+			loadQns();
+		</script>
+	</body>
+</html>
