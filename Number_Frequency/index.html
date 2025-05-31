@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Number Frequency Counter</title>
+		<style>
+			body {
+				font-family: sans-serif;
+				padding: 20px;
+				max-width: 600px;
+				margin: auto;
+			}
+			textarea {
+				width: 100%;
+				height: 100px;
+				padding: 10px;
+				font-size: 16px;
+				margin-bottom: 10px;
+			}
+			button {
+				padding: 10px 15px;
+				font-size: 16px;
+				cursor: pointer;
+				margin-bottom: 20px;
+			}
+			.result {
+				background-color: #f4f4f4;
+				padding: 15px;
+				border-radius: 5px;
+				font-size: 16px;
+				white-space: pre-wrap;
+			}
+		</style>
+	</head>
+	<body>
+		<h2>🔢 Number Frequency Counter</h2>
+
+		<textarea
+			id="numberInput"
+			placeholder="Enter numbers separated by commas (e.g. 1,2,2,3,3,3)"
+		></textarea>
+		<br />
+		<button onclick="countFrequency()">Count Frequency</button>
+
+		<div id="result" id="output"></div>
+
+		<script>
+			const numberInput = document.getElementById("numberInput");
+			const result = document.getElementById("result");
+
+			function countFrequency() {
+				let userInput = numberInput.value
+					.split(",")
+					.map((item) => parseInt(item.trim()))
+					.filter(Boolean);
+				let newNum = {};
+				for (const num of userInput) {
+					newNum[num] = (newNum[num] || 0) + 1;
+				}
+				console.log(newNum);
+
+				let output = "";
+				for (const num in newNum) {
+					let times = newNum[num] === 1 ? "time" : "times";
+					output += `${num} → ${newNum[num]} ${times} \n`;
+				}
+
+				result.textContent = output || "Please enter a set of number";
+			}
+		</script>
+	</body>
+</html>
