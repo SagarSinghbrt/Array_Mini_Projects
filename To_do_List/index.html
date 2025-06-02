@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>To-Do-List</title>
+		<style>
+			body {
+				font-family: Arial;
+				max-width: 400px;
+				margin: 40px auto;
+				padding: 20px;
+				background-color: #f4f4f4;
+			}
+			h2 {
+				text-align: center;
+			}
+			input,
+			button {
+				padding: 10px;
+				font-size: 16px;
+				margin-top: 10px;
+			}
+			ul {
+				list-style: none;
+				padding: 0;
+				margin-top: 20px;
+			}
+			li {
+				background: #fff;
+				margin-bottom: 10px;
+				padding: 10px;
+				display: flex;
+				justify-content: space-between;
+				border-radius: 5px;
+			}
+			.delete {
+				background: blue;
+				color: white;
+				border: none;
+				padding: 5px 10px;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<h2>Simple To-Do List</h2>
+		<input type="text" id="taskInput" placeholder="Enter task" />
+		<button onclick="addTask()">Add Task</button>
+
+		<ul id="taskList"></ul>
+
+		<script>
+			let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+			function saveTasks() {
+				localStorage.setItem("tasks", JSON.stringify(tasks));
+			}
+
+			function addTask() {
+				let input = document.getElementById("taskInput");
+				let inputValue = input.value.trim();
+				input.value = "";
+				tasks.push(inputValue);
+				saveTasks();
+				render();
+			}
+
+			function render() {
+				let lists = document.getElementById("taskList");
+				lists.innerHTML = "";
+
+				tasks.forEach((task) => {
+					let li = document.createElement("li");
+					li.innerHTML = ` <span class="edit">${task}</span>
+					<button class="delete">X</button>`;
+					lists.appendChild(li);
+				});
+
+				editList();
+				deleteTask();
+			}
+
+			function deleteTask() {
+				let removeBtn = document.querySelectorAll(".delete");
+				removeBtn.forEach((btn) => {
+					btn.addEventListener("click", function (e) {
+						let targetList = e.target.parentElement;
+						let data = targetList.querySelector("span").innerHTML;
+						let index = tasks.indexOf(data);
+						tasks.splice(index, 1);
+						saveTasks();
+						render();
+					});
+				});
+			}
+
+			function editList() {
+				let span = document.querySelectorAll(".edit");
+
+				span.forEach((edit, index) => {
+					edit.addEventListener("click", function (e) {
+						let input = document.getElementById("taskInput");
+						input.value = edit.textContent;
+
+						input.onkeydown = function (e) {
+							if (event.key === "Enter") {
+								tasks[index] = tasks[index].replace(
+									edit.textContent,
+									input.value
+								);
+								saveTasks();
+								render();
+								input.value = "";
+							}
+						};
+					});
+				});
+			}
+
+			render();
+		</script>
+	</body>
+</html>
